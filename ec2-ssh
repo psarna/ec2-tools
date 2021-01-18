@@ -1,0 +1,5 @@
+ARGS=
+case $1 in
+-t) ARGS=$1; shift;;
+esac
+ssh $ARGS -i ~/.ssh/scylla-qa-ec2 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null centos@"$@"

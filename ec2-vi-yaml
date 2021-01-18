@@ -1,0 +1,1 @@
+ec2-ssh -t $1 "vi /etc/scylla/scylla.yaml; sudo service scylla-server restart"

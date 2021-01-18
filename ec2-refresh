@@ -1,0 +1,2 @@
+FILE=/tmp/ec2-instances-$USER
+aws ec2 describe-instances --filters "Name=tag:Name,Values=$USER-*" >$FILE

@@ -1,0 +1,15 @@
+# Create build/release/scylla-package.tar.gz and update the Scylla executable
+# and libraries on the remote machine from that.
+set -xe
+strip build/release/scylla
+ninja build/release/scylla-package.tar.gz
+rm -fr /tmp/scylla-package
+mkdir /tmp/scylla-package
+ORIGDIR=`pwd`
+cd /tmp/scylla-package
+tar xvf $ORIGDIR/build/release/scylla-package.tar.gz
+# The "rsync-path" is needed because the target only allows us to ssh as
+# user "centos", not root, but needs root permissions to actually write the
+# files...
+rsync -e "ssh -i ~/.ssh/scylla-qa-ec2 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l centos" --rsync-path="sudo rsync" -avzP bin libexec libreloc $1:/opt/scylladb/
+ec2-ssh $1 "sudo service scylla-server restart"

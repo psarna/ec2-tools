@@ -1,0 +1,1 @@
+jq -r '.Reservations[].Instances[] |.PublicIpAddress+" "+.InstanceType+" "+.State.Name+" "+(.Tags[]|select(.Key=="NodeType").Value)' /tmp/ec2-instances-$USER

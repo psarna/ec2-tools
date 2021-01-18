@@ -1,0 +1,1 @@
+echo http://$(ec2-ips | grep monitor | cut -f1 -d' '):3000

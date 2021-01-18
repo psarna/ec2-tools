@@ -1,0 +1,4 @@
+set -xe
+strip build/release/scylla
+rsync -e "ssh -i ~/.ssh/scylla-qa-ec2 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -l centos" --rsync-path="sudo rsync" -avzP build/release/scylla $1:/opt/scylladb/libexec/scylla.bin
+ec2-ssh $1 "sudo service scylla-server restart"
