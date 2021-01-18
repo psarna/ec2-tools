@@ -1,6 +1,6 @@
 TYPE=${1:-i3}
 ORD=${2:-1}
-IP=$(ec2-ips | grep $TYPE | sed -n ${ORD}p | cut -f1 -d' ')
+IP=$(ec2-ips | grep -v terminated | grep $TYPE | sed -n ${ORD}p | cut -f1 -d' ')
 [ $IP ] || echo "Machine $TYPE $ORD not found"
 echo Connecting to $IP
 ec2-ssh $IP
